@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee - Inventory</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <h1>Inventory</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Item ID</th>
+                <th>Item Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="inventoryItem : ${inventory}">
+                <td th:text="${inventoryItem.id}"></td>
+                <td th:text="${inventoryItem.name}"></td>
+                <td th:text="${#numbers.formatDecimal(inventoryItem.price, 2, 2)}"></td>
+                <td th:text="${inventoryItem.stock}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><h4>INVENTORY WILL SHOW HERE</h4><br>
+
+    
+    <a href="/employee/dashboard">Back to Dashboard</a>
+</body>
+</html>

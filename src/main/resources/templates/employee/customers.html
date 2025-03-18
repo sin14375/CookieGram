@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookiegram - Customer Requests</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f4f4;
+      padding-top: 70px;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      top: 50px;
+      left: 0;
+      background: #3C1F1E;
+      color: white;
+      padding: 15px;
+    }
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      background: #8B4513;
+      border-radius: 5px;
+    }
+    .main-content {
+      margin-left: 270px;
+      padding: 20px;
+    }
+    .table {
+      margin-top: 20px;
+    }
+    .table th, .table td {
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" th:href="@{/employee/dashboard}">
+                  <i class="fas fa-cookie"></i> Cookiegram
+              </a>
+          </div>
+          <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav navbar-right">
+                  <li sec:authorize="isAuthenticated()">
+                      <a th:href="@{/logout}">
+                          <i class="fas fa-sign-out-alt"></i> Logout
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+      <h3>Employee Menu</h3>
+      <a th:href="@{/employee/orders}"><i class="fas fa-box"></i> Manage Orders</a>
+      <a th:href="@{/employee/inventory}"><i class="fas fa-warehouse"></i> Inventory</a>
+      <a th:href="@{/employee/tasks}"><i class="fas fa-tasks"></i> Assigned Tasks</a>
+      <a th:href="@{/employee/customers}"><i class="fas fa-users"></i> Customer Requests</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container main-content">
+      <h1>Customer Requests</h1>
+      <p class="lead">Review special instructions submitted by customers along with order details.</p>
+      
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Order ID</th>
+                  <th>Customer Name</th>
+                  <th>Total Quantity</th>
+                  <th>Amount Due</th>
+                  <th>Special Requests</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr th:each="order : ${orders}">
+                  <td th:text="${order.id}">Order ID</td>
+                  <td th:text="${order.customerFullName}">Customer Name</td>
+                  <td th:text="${order.totalQuantity}">Total Quantity</td>
+                  <td th:text="${#numbers.formatDecimal(order.amountDue, 2, 2)}">$0.00</td>
+                  <td th:text="${order.specialRequests}">None</td>
+              </tr>
+          </tbody>
+      </table>
+      
+      <a href="/employee/dashboard" class="btn btn-default">
+          <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+  </div>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 20px 0; background: #f8f8f8; margin-top: 40px;">
+      <address>
+          <i>Created by: The Incredible Team</i> &copy;2025
+      </address>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

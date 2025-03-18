@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookiegram - Login Options</title>
+    <!-- Fonts / CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Your global styles -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- Inline style for quick overrides -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F0F0F0;
+        }
+        .container {
+            margin-top: 80px;
+        }
+        .card {
+            background-color: #FFFFFF;
+            padding: 2.5em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+        }
+        .btn-primary {
+            background-color: #D2691E;
+            border: none;
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 6px;
+            transition: 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #B85C15;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button 
+                    type="button" 
+                    class="navbar-toggle collapsed" 
+                    data-toggle="collapse" 
+                    data-target="#navbar"
+                >
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fas fa-cookie"></i> Cookiegram
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Role Selection -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="card text-center">
+                    <h2>Select Your Login</h2>
+                    <button class="btn btn-primary" onclick="location.href='/login?role=admin'">
+                        <i class="fas fa-user-tie"></i> Login as Admin
+                    </button>
+                    <button class="btn btn-primary" onclick="location.href='/login?role=employee'">
+                        <i class="fas fa-user"></i> Login as Employee
+                    </button>
+                    <button class="btn btn-primary" onclick="location.href='/login?role=customer'">
+                        <i class="fas fa-user"></i> Login as Customer
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+    
+    </div>
+    <br><br><br>  
+    <!-- Footer placed within the body -->
+    <footer style="text-align: center; padding: 20px 0; background: #f8f8f8; margin-top: 40px;">
+        <address>
+            <i>Created by: The Incredible Team </i>&copy;2025
+        </address>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

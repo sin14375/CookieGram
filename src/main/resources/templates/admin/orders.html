@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Customer Orders</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Customer Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Total Quantity</th>
+                <th>Amount Due</th>
+                <th>Special Requests</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.customerFullName}"></td>
+                <td th:text="${order.totalQuantity}"></td>
+                <td th:text="${#numbers.formatDecimal(order.amountDue, 2, 2)}"></td>
+                <td th:text="${order.specialRequests}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><h4>ORDERS WILL SHOW HERE</h4><br>
+
+
+    <a href="/admin/dashboard">Back to Dashboard</a>
+</body>
+</html>

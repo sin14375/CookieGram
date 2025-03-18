@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookiegram - Customer Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        :root {
+            --cookie-brown: #8B4513;
+            --cookie-light: #DEB887;
+            --cookie-cream: #FAEBD7;
+            --cookie-chocolate: #3C1F1E;
+            --cookie-accent: #D2691E;
+        }
+        body {
+            background: var(--cookie-cream);
+            font-family: 'Poppins', sans-serif;
+            padding-top: 70px;
+        }
+        .navbar-inverse {
+            background: var(--cookie-chocolate);
+            border-color: var(--cookie-brown);
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav > li > a {
+            color: var(--cookie-cream) !important;
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: var(--cookie-light) !important;
+        }
+        .card {
+            background: var(--cookie-light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .cookie-gallery {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--cookie-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .cookie-gallery h2 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 28px;
+            color: var(--cookie-chocolate);
+        }
+        .cookie-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+        .cookie-item {
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--cookie-cream);
+            padding: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .cookie-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .cookie-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .cookie-item p {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--cookie-chocolate);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar with Cart Icon and Badge -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" 
+                        class="navbar-toggle collapsed" 
+                        data-toggle="collapse" 
+                        data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/customer/dashboard}">
+                    <i class="fas fa-cookie"></i> Cookiegram
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a th:href="@{/cart/view}">
+                            <i class="fas fa-shopping-cart"></i> Cart 
+                            <span class="badge" th:text="${cartCount}">0</span>
+                        </a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-cookie-bite"></i> Welcome to Cookiegram Customer Page</h1>
+            <p class="lead">Share your delicious moments with the world!</p>
+            <div class="welcome-message">
+                Welcome back, <span sec:authentication="principal.fullName"></span>!
+            </div>
+        </div>
+
+        <!-- Cookie Gallery Section -->
+        <div class="cookie-gallery">
+            <h2>Our Delicious Cookies</h2>
+            <div class="cookie-container">
+                <!-- Each cookie item includes an "Add to Cart" form with a quantity selector -->
+                <div class="cookie-item">
+                    <img th:src="@{/images/AustrianLinzerCookies.jpg}" alt="Austrian Linzer Cookies">
+                    <p>Austrian Linzer Cookies</p>
+                    <p class="cookie-price">$2.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="1"/>
+                        <label for="qty1">Qty:</label>
+                        <input type="number" id="qty1" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <!-- Repeat for each cookie item with unique IDs and quantity fields -->
+                <div class="cookie-item">
+                    <img th:src="@{/images/ChocolateChipCookies.jpg}" alt="Chocolate Chip Cookies">
+                    <p>Chocolate Chip Cookies</p>
+                    <p class="cookie-price">$5.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="2"/>
+                        <label for="qty2">Qty:</label>
+                        <input type="number" id="qty2" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/GingerbreadCookies.jpg}" alt="Gingerbread Cookies">
+                    <p>Gingerbread Cookies</p>
+                    <p class="cookie-price">$2.40</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="3"/>
+                        <label for="qty3">Qty:</label>
+                        <input type="number" id="qty3" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/LimeCookies.jpg}" alt="Lime Cookies">
+                    <p>Lime Cookies</p>
+                    <p class="cookie-price">$4.00</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="4"/>
+                        <label for="qty4">Qty:</label>
+                        <input type="number" id="qty4" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/OatmealRaisinCookie.jpg}" alt="Oatmeal Raisin Cookie">
+                    <p>Oatmeal Raisin Cookie</p>
+                    <p class="cookie-price">$1.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="5"/>
+                        <label for="qty5">Qty:</label>
+                        <input type="number" id="qty5" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/PeanutButterBlossoms.jpg}" alt="PeanutButterBlossoms Cookie">
+                    <p>PeanutButterBlossoms Cookie</p>
+                    <p class="cookie-price">$3.39</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="6"/>
+                        <label for="qty6">Qty:</label>
+                        <input type="number" id="qty6" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/PineappleSemiSweet.jpg}" alt="Pineapple Semi Sweet">
+                    <p>Pineapple Semi Sweet</p>
+                    <p class="cookie-price">$2.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="7"/>
+                        <label for="qty7">Qty:</label>
+                        <input type="number" id="qty7" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/PistachioCookies.jpg}" alt="Pistachio Cookies">
+                    <p>Pistachio Cookies</p>
+                    <p class="cookie-price">$2.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="8"/>
+                        <label for="qty8">Qty:</label>
+                        <input type="number" id="qty8" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/RaspberryCookiesIcing.jpg}" alt="Raspberry Cookies Icing">
+                    <p>Raspberry Cookies Icing</p>
+                    <p class="cookie-price">$2.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="9"/>
+                        <label for="qty9">Qty:</label>
+                        <input type="number" id="qty9" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/SugarCookiee.jpg}" alt="Sugar Cookie">
+                    <p>Sugar Cookie</p>
+                    <p class="cookie-price">$2.50</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="10"/>
+                        <label for="qty10">Qty:</label>
+                        <input type="number" id="qty10" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/WhiteChocolateCookies.jpg}" alt="White Chocolate Cookies">
+                    <p>White Chocolate Cookies</p>
+                    <p class="cookie-price">$1.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="11"/>
+                        <label for="qty11">Qty:</label>
+                        <input type="number" id="qty11" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="cookie-item">
+                    <img th:src="@{/images/WhiteChocolateStrawberry.jpg}" alt="White Chocolate Strawberry">
+                    <p>White Chocolate Strawberry</p>
+                    <p class="cookie-price">$3.99</p>
+                    <form th:action="@{/cart/add}" method="post">
+                        <input type="hidden" name="cookieId" value="12"/>
+                        <label for="qty12">Qty:</label>
+                        <input type="number" id="qty12" name="quantity" value="1" min="1" style="width:60px;">
+                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br> 
+    <!-- Footer placed within the body -->
+    <footer style="text-align: center; padding: 20px 0; background: #f8f8f8; margin-top: 40px;">
+        <address>
+            <i>Created by: The Incredible Team </i>&copy;2025
+        </address>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

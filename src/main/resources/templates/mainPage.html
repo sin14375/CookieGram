@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookiegram - Welcome</title>
+    <!-- Fonts / CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Your global styles -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!-- Inline style for small, custom overrides -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F0F0F0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            background-color: #FFFFFF;
+            padding: 2em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .btn-primary {
+            background-color: #D2691E;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #B85C15;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button 
+                    type="button" 
+                    class="navbar-toggle collapsed" 
+                    data-toggle="collapse" 
+                    data-target="#navbar"
+                >
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fas fa-cookie"></i> Cookiegram
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="card text-center">
+                    <h1><i class="fas fa-cookie"></i> Cookiegram</h1>
+                    <h2>Welcome!</h2>
+                    <p>
+                        Our goal at Cookiegram is to bring sweet cookie experiences
+                        and personalized messages together in one place. We aim to
+                        make every moment more delightful and memorable.
+                    </p>
+                    <br><br>
+                    <button class="btn btn-primary" onclick="location.href='/index'">
+                        <i class="fas fa-sign-in-alt"></i> Login Here
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br> 
+    <!-- Footer placed within the body -->
+    <footer style="text-align: center; padding: 20px 0; background: #f8f8f8; margin-top: 40px;">
+        <address>
+            <i>Created by: The Incredible Team </i>&copy;2025
+        </address>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

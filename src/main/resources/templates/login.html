@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookiegram - Login</title>
+    <!-- Fonts / CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Your global styles -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button
+                    type="button"
+                    class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#navbar"
+                >
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fas fa-cookie"></i> Cookiegram
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse"></div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 80px;">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="card">
+                    <!-- Using 'param.role != null' to prevent null indexing -->
+                    <h1 class="text-center" th:if="${param.role != null and param.role[0] == 'admin'}">
+                        <i class="fas fa-sign-in-alt"></i> Admin Login
+                    </h1>
+                    <h1 class="text-center" th:if="${param.role != null and param.role[0] == 'employee'}">
+                        <i class="fas fa-sign-in-alt"></i> Employee Login
+                    </h1>
+                    <h1 class="text-center" th:if="${param.role != null and param.role[0] == 'customer'}">
+                        <i class="fas fa-sign-in-alt"></i> Customer Login
+                    </h1>
+
+                    <!-- Default heading if 'param.role' is null or doesn't match admin/employee/customer -->
+                    <h1 class="text-center"
+                        th:if="${param.role == null or !(param.role[0] == 'admin' or param.role[0] == 'employee' or param.role[0] == 'customer')}">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </h1>
+
+                    <!-- Error messages -->
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> Invalid username or password.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> You have been logged out.
+                    </div>
+
+                    <!-- Login Form -->
+                    <form th:action="@{/login}" method="post">
+                        <!-- Only fill this hidden field if param.role != null -->
+                        <input type="hidden" name="role"
+                               th:value="${param.role != null} ? ${param.role[0]} : ''" />
+
+                        <div class="form-group">
+                            <label for="username"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="Enter your email" required autofocus />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password"><i class="fas fa-lock"></i> Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Enter your password" required />
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center">
+                        <p>
+                            New to Cookiegram?
+                            <a th:href="@{/registration}" class="register-link">
+                                <i class="fas fa-user-plus"></i> Register here
+                            </a>
+                        </p>
+                    </div>
+                </div> <!-- .card -->
+            </div> <!-- .col -->
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+    <br><br><br> 
+    <!-- Footer placed within the body -->
+    <footer style="text-align: center; padding: 20px 0; background: #f8f8f8; margin-top: 40px;">
+      <address>
+          <i>Created by: The Incredible Team </i>&copy;2025
+      </address>
+  </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
